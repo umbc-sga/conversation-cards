@@ -1,0 +1,142 @@
+<html>
+    <head>
+        <title>Conversation Cards</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+            body { font-family: sans-serif; }
+
+            #card {
+                width: 100vw;
+                height: 50vh;
+                text-align: center;
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+                background: #fdb515;
+                color: white;
+                display: table-cell;
+                vertical-align: middle;
+                font-size: 2em;
+            }
+
+            button { padding: 10px; border-radius: 5px; }
+            button:focus {outline:0;}
+
+            #palette {display: inline;}
+            #palette td { padding: 10px; border: 1px solid black; }
+            #palette td.active { border: 3px double white; }
+        </style>
+    </head>
+
+    <body>
+        <h1 style="text-align: center; margin-bottom: 5px;">UMBC Conversation Cards</h1>
+        <p style="text-align: center;">
+            Credit: Dr. Nancy Young (VPSA of Student Affairs) and the <a href="https://studentaffairs.umbc.edu/">Division of Student Affairs</a>
+        </p>
+
+        <p style="text-align: center;">
+            <button onclick="newCard()">New Card</button>
+        </p>
+        <p style="text-align: center;">
+            <table id="palette">
+                <td class="active" style="background: #fdb515;" onclick="changeCardColor(this)"></td>
+                <td style="background: #000000;" onclick="changeCardColor(this)"></td>
+                <td style="background: #da2128;" onclick="changeCardColor(this)"></td>
+                <td style="background: #c7c8ca;" onclick="changeCardColor(this)"></td>
+                <td style="background: #007176;" onclick="changeCardColor(this)"></td>
+                <td style="background: #a67a05;" onclick="changeCardColor(this)"></td>
+                <td style="background: #636466;" onclick="changeCardColor(this)"></td>
+            </table>
+        </p>
+
+        <div id="card"></div>
+
+        <script>
+            const COLORS = ["#da2128", "#c7c8ca", "#007176", "#a67a05", "#636466"];
+            const CARD = document.getElementById("card");
+
+            let prompts = [
+                "One of the ways UMBC has challenged me is...",
+                "My favorite student organization event is...",
+                "If I had a UMBC \"bucket list\" (things to do before I graduate), I would have __________ on that list.",
+                "Which is your favorite building on campus and why?",
+                "What is your favorite time of year at UMBC and why?",
+                "Who is the first person you met and made you feel welcome, at UMBC?",
+                "What is your academic program or major?",
+                "I wish the following for those are are graduating from UMBC: _________",
+                "One of the top \"UMBC Sports Moments\" would be...",
+                "In 50 years I imagine that UMBC will...",
+                "The funniest thing that's happened to me at UMBC was...",
+                "My best memory at UMBC is...",
+                "When people ask you, \"What do you do at UMBC?\" What do you say?",
+                "My favorite time of day/night at UMBC is...",
+                "I wish the following for UMBC students: _________",
+                "Describe your feelings for UMBC.",
+                "Have any of your initial UMBC observations become known to you as \"part of the UMBC culture?\" Please elaborate.",
+                "What were your initial observations as you transitioned to UMBC?",
+                "Who, at UMBC, makes you laugh?",
+                "One of the things I have learned during my time at UMBC is...",
+                "If you could wish one thing for the UMBC community it would be....",
+                "Describe one of your favorite UMBC students (no names).",
+                "What is your favorite place near the UMBC campus?",
+                "Which academic degree program do you admire the most at UMBC? Why?",
+                "If I were going to create a new tagline for UMBC it would be...",
+                "One of the highlights of my time at UMBC has been...",
+                "Describe UMBC to someone who is totally unfamiliar with the campus and its community.",
+                "What about the culture at UMBC should live forever?",
+                "If you needed to find a place on campus to go and unwind, meditate or get centered, it would be...",
+                "My favorite food on campus is...",
+                "One of the most impressive things I've learned about a UMBC student is...",
+                "What is your favorite UMBC sports team? Why?",
+                "What words of advice do you have for the top leadership at UMBC?",
+                "What's the best thing you've experienced at UMBC in the past few months?",
+                "What words of advice do you have for students new to UMBC?",
+                "What event or experience do you want to attend/have at UMBC?",
+                "What event or experience has been your favorite at UMBC?",
+                "What is your favorite place on the UMBC campus and why?",
+                "Describe how you experience the students at UMBC.",
+                "How is UMBC different than other places you have been before?",
+                "What difficulties did you have as you transitioned to UMBC?",
+                "When did you come to UMBC? From where did you come?",
+                "What attracted you to UMBC?",
+                "Describe your feelings as you transitioned to UMBC.",
+                "If you could take a UMBC out-of-state or Internation student anywhere in Maryland, I would take them to...",
+                "My favorite student organization is _______ because...",
+                "If there was one thing you could change about UMBC it would be...",
+                "What construction have you seen/experienced in your time at UMBC?",
+                "What do you believe are the values inherent in the UMBC community? Please describe.",
+                "How would you describe UMBC to a person from another state in the U.S.?",
+                "Describe what you believe to be the hardest thing for \"new to UMBC people\" to understand about UMBC."
+            ];
+
+            shuffleArray(prompts);
+
+            newCard();
+
+            function newCard() {
+                if (prompts.length) {
+                    let newPrompt = prompts.shift();
+
+                    CARD.innerHTML = newPrompt;
+                    // CARD.style.backgroundColor = COLORS[Math.floor(Math.random() * COLORS.length)];
+
+                    prompts.push(newPrompt);
+                }
+            }
+
+            function changeCardColor(el) {
+                document.getElementsByClassName("active")[0].classList.remove("active");
+
+                el.classList.add("active");
+                CARD.style.background = el.style.background;
+            }
+
+            // https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+            }
+        </script>
+    </body>
+</html>
